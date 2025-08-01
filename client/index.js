@@ -1,5 +1,10 @@
 const socket = io("ws://localhost:5000");
 
+const userId = prompt("enter ID");
+if (userId) {
+  socket.emit("info", userId);
+}
+
 let boxes = document.querySelectorAll(".box");
 // let resetBtn = document.querySelector('#reset');
 // let newGameBtn = document.querySelector('#new-btn');
@@ -8,6 +13,9 @@ let boxes = document.querySelectorAll(".box");
 
 socket.on("data", (data) => {
   console.log(data);
+  boxes.forEach((box, i) => {
+    box.innerHTML = data[i];
+  });
 });
 socket.on("win", (win) => {
   console.log(win);
